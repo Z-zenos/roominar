@@ -69,4 +69,4 @@ WORKDIR /roominar
 
 EXPOSE 8000
 EXPOSE 3000
-CMD ["uvicorn", "app.main:app","--host", "0.0.0.0"]
+CMD ["uvicorn", "backend.main:app","--host", "0.0.0.0"]
