@@ -41,8 +41,7 @@ RUN curl -sSL https://install.python-poetry.org | python
 # Copy project requirement files here to ensure they will be cached.
 # We will cache our requirements and only reinstall them when pyproject.toml or poetry.lock files change. Otherwise builds will be slow.
 WORKDIR $PYSETUP_PATH
-COPY poetry.lock pyproject.toml ./
-COPY ./app /roominar/app/
+COPY poetry.lock pyproject.toml README.md ./
 
 # Install runtime deps - uses $POETRY_VIRTUALENVS_IN_PROJECT internally
 RUN poetry install --only main
@@ -56,7 +55,7 @@ COPY --from=builder-base $POETRY_HOME $POETRY_HOME
 COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
-    procps libpq-dev build-essential git bash curl tar sudo default-jre node pnpm && \
+    procps libpq-dev build-essential git bash curl tar sudo default-jre nodejs npm && \
     useradd -m -d /home/roominar -s /bin/bash roominar && \
     chown roominar /home/roominar && \
     echo 'roominar ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers && \
